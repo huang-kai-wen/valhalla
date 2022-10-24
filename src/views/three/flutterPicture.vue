@@ -16,13 +16,13 @@ export default defineComponent({
     name: "flutterPicture",
     setup() {
       let container: any = null;
-      let stats: unknown = null;
+      let stats: any = null;
       let scene: any = null;
       let renderer: any = null;
       let controls: unknown = null;
       let water: any = null;
       let sun: unknown = null;
-      let mesh: unknown = null;
+      let mesh: any = null;
       let camera: any = null;
       return {
         container,
@@ -68,12 +68,28 @@ methods: {
       );
       this.water.rotation.x = - Math.PI / 2;
 			this.scene.add( this.water );
+      const geometry = new THREE.BoxGeometry( 30, 30, 30 );
+      const material = new THREE.MeshStandardMaterial( { roughness: 0 } );
+      this.mesh = new THREE.Mesh( geometry, material );
+      // this.scene.add( this.mesh );
     },
-    animate() {},
+    animate() {
+      requestAnimationFrame( this.animate );
+      this.render();
+      this.stats.update();
+    },
+    render() {
+      const time = performance.now() * 0.001;
+      this.mesh.position.y = Math.sin( time ) * 20 + 5;
+      this.mesh.rotation.x = time * 0.5;
+      this.mesh.rotation.z = time * 0.51;
+      this.water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
+      this.renderer.render( this.scene, this.camera );
+    }
 },
 mounted() {
-    init();
-	animate();
+  this.init();
+	this.animate();
 },
 });
 </script>
