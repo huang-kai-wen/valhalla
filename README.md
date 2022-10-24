@@ -1,4 +1,4 @@
-# halvalla
+# valhalla
 
 ## Project setup
 ```

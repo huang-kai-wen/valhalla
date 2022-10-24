@@ -1,6 +1,10 @@
 import { createApp } from "vue";
+import "element-plus/theme-chalk/index.css";
+import ElementPlus from "element-plus";
 import App from "./App.vue";
-import router from "./router";
+import route from "./router";
 import store from "./store";
 
-createApp(App).use(store).use(router).mount("#app");
+const app = createApp(App);
+app.use(ElementPlus);
+app.use(store).use(route.router).mount("#app");
