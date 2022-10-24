@@ -1,7 +1,9 @@
 <template>
   <div>
     <sideNav />
-    <router-view />
+    <div class="content-right">
+      <router-view />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -22,5 +24,8 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   position: relative;
+  .content-right {
+    margin-left: 220px;
+  }
 }
 </style>

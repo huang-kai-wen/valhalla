@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    111
     <div id="container"></div>
   </div>
 </template>
@@ -10,8 +9,8 @@
 import { defineComponent } from "vue";
 import * as Three from "three";
 import { Water } from './utils-three/water.js';
+
 let THREE =  Three
-console.log("Water", Water)
 export default defineComponent({
     name: "flutterPicture",
     setup() {
@@ -22,7 +21,6 @@ export default defineComponent({
       let controls: unknown = null;
       let water: any = null;
       let sun: unknown = null;
-      let mesh: any = null;
       let camera: any = null;
       return {
         container,
@@ -32,7 +30,6 @@ export default defineComponent({
         controls,
         water,
         sun,
-        mesh,
         camera,
       };
     },
@@ -54,8 +51,7 @@ methods: {
         {
           textureWidth: 512,
           textureHeight: 512,
-          waterNormals: new THREE.TextureLoader().load( 'textures/waternormals.jpg', function ( texture ) {
-
+          waterNormals: new THREE.TextureLoader().load( require ("./logo.png"), function ( texture: any ) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
           } ),
@@ -68,22 +64,14 @@ methods: {
       );
       this.water.rotation.x = - Math.PI / 2;
 			this.scene.add( this.water );
-      const geometry = new THREE.BoxGeometry( 30, 30, 30 );
-      const material = new THREE.MeshStandardMaterial( { roughness: 0 } );
-      this.mesh = new THREE.Mesh( geometry, material );
       // this.scene.add( this.mesh );
     },
     animate() {
       requestAnimationFrame( this.animate );
       this.render();
-      this.stats.update();
+      // this.stats.update();
     },
     render() {
-      const time = performance.now() * 0.001;
-      this.mesh.position.y = Math.sin( time ) * 20 + 5;
-      this.mesh.rotation.x = time * 0.5;
-      this.mesh.rotation.z = time * 0.51;
-      this.water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
       this.renderer.render( this.scene, this.camera );
     }
 },
